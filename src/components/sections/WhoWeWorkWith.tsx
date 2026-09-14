@@ -1,105 +1,141 @@
+"use client";
+
+import { useState } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Container } from "@/components/ui/Container";
-import { FadeIn } from "@/components/motion/FadeIn";
 import { ButtonLink } from "@/components/ui/Button";
+import { FadeIn } from "@/components/motion/FadeIn";
 
 const industries = [
   {
     name: "Management Consulting",
     href: "/industries/consulting",
-    note: "Client delivery, pipeline management, utilization reporting",
+    pains: ["Proposal pipeline management", "Utilization reporting", "Project handoff coordination"],
   },
   {
     name: "Legal",
     href: "/industries/legal",
-    note: "Matter intake, client updates, billing workflows",
+    pains: ["Matter intake and qualification", "Client status updates", "Billing workflow gaps"],
   },
   {
     name: "Accounting",
     href: "/industries/accounting",
-    note: "Seasonal capacity, client portals, document collection",
+    pains: ["Seasonal capacity coordination", "Client portal and document collection", "Deadline tracking"],
   },
   {
     name: "Financial Advisory",
     href: "/industries/financial-advisory",
-    note: "Lead qualification, review preparation, compliance workflows",
+    pains: ["Lead qualification and follow-up", "Review preparation workflows", "Compliance document tracking"],
   },
   {
     name: "Executive Search",
     href: "/industries/executive-search",
-    note: "Candidate pipelines, client updates, placement workflows",
+    pains: ["Candidate pipeline management", "Client progress updates", "Placement and onboarding coordination"],
   },
   {
     name: "Architecture & Design",
     href: "/industries/architecture",
-    note: "Project handoffs, client communication, design review cycles",
+    pains: ["Project handoff sequences", "Client feedback coordination", "Design review cycles"],
   },
 ];
 
 export function WhoWeWorkWith() {
+  const reduce = useReducedMotion();
+  const [hovered, setHovered] = useState<number | null>(null);
+
   return (
     <section className="py-24 lg:py-32 border-t border-[#1E1E26] bg-[#0E0E12]">
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-          {/* Left — heading */}
+          {/* Left */}
           <FadeIn className="lg:col-span-4">
-            <div className="lg:sticky lg:top-32">
+            <div className="lg:sticky lg:top-28">
               <h2
                 className="font-semibold text-[#EEEEF0] leading-[1.15] tracking-[-0.025em]"
-                style={{ fontSize: "clamp(1.625rem, 2.5vw, 2.25rem)" }}
+                style={{ fontSize: "clamp(1.75rem, 2.5vw, 2.5rem)" }}
               >
-                Who we work with
+                Who we
+                <br />
+                work with
               </h2>
               <p className="mt-5 text-sm text-[#555560] leading-relaxed max-w-[36ch]">
-                We work with service firms that sell expertise, run on
-                relationships, and lose time to operational coordination.
+                Firms that sell expertise and need their back-office to match
+                the quality of their client-facing work.
               </p>
               <p className="mt-4 text-sm text-[#555560] leading-relaxed max-w-[36ch]">
-                If your firm bills by deliverable or expertise rather than by
-                volume, Reygent is likely a strong fit.
+                If your firm bills by expertise rather than volume, Reygent is
+                likely a strong fit.
               </p>
               <div className="mt-8">
-                <ButtonLink
-                  href="/assessment"
-                  variant="secondary"
-                  size="sm"
-                  className="text-xs"
-                >
+                <ButtonLink href="/assessment" variant="secondary" size="sm">
                   Check your fit
                 </ButtonLink>
               </div>
             </div>
           </FadeIn>
 
-          {/* Right — industry list */}
+          {/* Right — interactive industry list */}
           <div className="lg:col-span-7 lg:col-start-6">
             <ul className="flex flex-col">
-              {industries.map((industry, i) => (
-                <FadeIn key={industry.name} delay={i * 0.05}>
+              {industries.map((ind, i) => (
+                <FadeIn key={ind.name} delay={i * 0.05}>
                   <li>
                     <a
-                      href={industry.href}
-                      className="group flex items-start gap-6 py-5 border-b border-[#1E1E26] first:border-t first:border-[#1E1E26] hover:bg-[#111116] -mx-4 px-4 transition-colors duration-150"
+                      href={ind.href}
+                      className="group block border-b border-[#1E1E26] first:border-t first:border-[#1E1E26]"
+                      onMouseEnter={() => setHovered(i)}
+                      onMouseLeave={() => setHovered(null)}
+                      onFocus={() => setHovered(i)}
+                      onBlur={() => setHovered(null)}
                     >
-                      <span
-                        className="font-mono text-[10px] text-[#35353C] tracking-[0.1em] mt-[3px] flex-shrink-0 w-6"
-                        aria-hidden="true"
-                      >
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <div className="flex flex-col gap-1 flex-1 min-w-0">
-                        <span className="text-[0.9375rem] font-medium text-[#88888F] group-hover:text-[#EEEEF0] transition-colors duration-150">
-                          {industry.name}
+                      <div className="flex items-start gap-6 px-4 -mx-4 py-5 transition-colors duration-150 hover:bg-[#111116]">
+                        <span
+                          className="font-mono text-[10px] tracking-[0.1em] mt-[3px] flex-shrink-0 w-6 transition-colors duration-300"
+                          style={{ color: hovered === i ? "#D4A96A" : "#35353C" }}
+                        >
+                          {String(i + 1).padStart(2, "0")}
                         </span>
-                        <span className="text-sm text-[#35353C] group-hover:text-[#555560] transition-colors duration-150 leading-snug">
-                          {industry.note}
+                        <div className="flex-1 min-w-0">
+                          <span
+                            className="block text-[0.9375rem] font-medium transition-colors duration-200"
+                            style={{ color: hovered === i ? "#EEEEF0" : "#88888F" }}
+                          >
+                            {ind.name}
+                          </span>
+                          <AnimatePresence>
+                            {hovered === i && (
+                              <motion.ul
+                                initial={reduce ? false : { opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: "auto" }}
+                                exit={{ opacity: 0, height: 0 }}
+                                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                                className="overflow-hidden"
+                              >
+                                <div className="pt-2 flex flex-col gap-1">
+                                  {ind.pains.map((pain) => (
+                                    <li
+                                      key={pain}
+                                      className="flex items-center gap-2 text-xs text-[#555560]"
+                                    >
+                                      <span className="h-px w-3 flex-shrink-0 bg-[#2A2A33]" />
+                                      {pain}
+                                    </li>
+                                  ))}
+                                </div>
+                              </motion.ul>
+                            )}
+                          </AnimatePresence>
+                        </div>
+                        <span
+                          className="flex-shrink-0 mt-[3px] text-sm transition-all duration-200"
+                          style={{
+                            color: hovered === i ? "#555560" : "#2A2A33",
+                            transform: hovered === i ? "translateX(3px)" : "translateX(0)",
+                          }}
+                        >
+                          &rarr;
                         </span>
                       </div>
-                      <span
-                        className="text-[#35353C] group-hover:text-[#555560] transition-colors duration-150 flex-shrink-0 mt-[2px]"
-                        aria-hidden="true"
-                      >
-                        &rarr;
-                      </span>
                     </a>
                   </li>
                 </FadeIn>

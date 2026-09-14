@@ -1,58 +1,34 @@
 import { Container } from "@/components/ui/Container";
 import { FadeIn } from "@/components/motion/FadeIn";
 
-/**
- * Proof / Capabilities section.
- *
- * No fabricated testimonials, client names, companies, metrics, or case studies.
- * Shows concrete operational systems Reygent is capable of building.
- * Honest about the absence of published case studies.
- */
-
 const capabilities = [
   {
-    system: "Lead routing",
+    num: "01",
+    system: "Lead routing workflow",
     description:
-      "A multi-channel intake system that captures inquiries from email, website forms, and referral sources — qualifies them against firm criteria — and routes to the right team member with context already assembled.",
-    specs: [
-      "Multi-source intake",
-      "Qualification logic",
-      "CRM/pipeline sync",
-      "Automated first response",
-    ],
+      "Multi-channel intake captures inquiries from email, web forms, and referral sources. Qualification logic scores each against firm criteria. Routing sends to the right team member with context already assembled. Automated first response dispatches immediately.",
+    specs: ["Multi-source intake", "Qualification scoring", "Pipeline routing", "Automated response", "CRM sync"],
   },
   {
-    system: "Client onboarding",
+    num: "02",
+    system: "Client onboarding sequence",
     description:
-      "An end-to-end onboarding workflow that moves a new engagement from signed contract to fully operational client — without manual coordination from your team.",
-    specs: [
-      "Document collection",
-      "Portal provisioning",
-      "Parallel task dispatch",
-      "Completion tracking",
-    ],
+      "Triggered on contract signature. Document requests dispatched automatically. Portal access provisioned in parallel with team task assignment. Client receives structured communications throughout. Completion tracked without manual follow-up.",
+    specs: ["Contract trigger", "Document collection", "Portal provisioning", "Task dispatch", "Completion tracking"],
   },
   {
-    system: "Follow-up sequences",
+    num: "03",
+    system: "Follow-up automation",
     description:
-      "A triggered communication system that maintains consistent contact with leads, prospects, and clients at the right intervals — based on their status, not on someone's calendar.",
-    specs: [
-      "Status-based triggers",
-      "Contextual messaging",
-      "Re-engagement logic",
-      "Escalation rules",
-    ],
+      "Status-based triggers ensure consistent contact at the right intervals. Re-engagement logic identifies dormant leads and re-activates them. Escalation rules surface situations requiring human judgment without requiring manual review.",
+    specs: ["Status triggers", "Interval logic", "Re-engagement", "Escalation rules", "Response tracking"],
   },
   {
-    system: "Operational reporting",
+    num: "04",
+    system: "Operational reporting pipeline",
     description:
-      "Automated data collection and report generation across the firm's operational systems — delivered to the right people on the right schedule without manual assembly.",
-    specs: [
-      "Cross-tool data pulls",
-      "Formatted delivery",
-      "Scheduled distribution",
-      "Exception alerts",
-    ],
+      "Data pulled from connected systems on a defined schedule. Processed, formatted, and delivered to the right people without manual assembly. Exception alerts surface anomalies before they become problems.",
+    specs: ["Cross-tool data pulls", "Scheduled processing", "Formatted delivery", "Distribution rules", "Exception alerts"],
   },
 ];
 
@@ -66,55 +42,63 @@ export function Proof() {
             <div className="lg:col-span-5">
               <h2
                 className="font-semibold text-[#EEEEF0] leading-[1.15] tracking-[-0.025em]"
-                style={{ fontSize: "clamp(1.625rem, 2.5vw, 2.25rem)" }}
+                style={{ fontSize: "clamp(1.75rem, 2.5vw, 2.5rem)" }}
               >
-                What these systems
+                Capability
                 <br />
-                look like in practice
+                specifications
               </h2>
             </div>
             <div className="lg:col-span-5 lg:col-start-8">
               <p className="text-sm text-[#555560] leading-relaxed max-w-[48ch]">
-                These are specifications of systems Reygent designs and builds.
-                Client case studies will be published as engagements complete.
+                These are the systems Reygent designs and builds. They are
+                described as implemented specifications, not as marketing
+                concepts. Case studies from live engagements will be added as
+                they complete.
               </p>
             </div>
           </div>
         </FadeIn>
 
-        {/* Capability specifications */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#1E1E26]">
+        {/* Specs */}
+        <div className="flex flex-col gap-px bg-[#1E1E26]">
           {capabilities.map((cap, i) => (
-            <FadeIn key={cap.system} delay={i * 0.06}>
-              <div className="bg-[#0B0B0E] p-8 flex flex-col gap-5 h-full">
-                {/* System name */}
-                <div className="flex items-center gap-3">
-                  <span className="font-mono text-[10px] text-[#D4A96A] tracking-[0.12em]">
-                    System
-                  </span>
-                  <span className="h-px flex-1 max-w-[24px] bg-[#1E1E26]" />
-                </div>
-                <h3 className="text-base font-semibold text-[#EEEEF0] tracking-[-0.01em]">
-                  {cap.system}
-                </h3>
+            <FadeIn key={cap.num} delay={i * 0.07}>
+              <div className="bg-[#09090C] p-8">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10">
+                  {/* Left — name */}
+                  <div className="lg:col-span-4">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="font-mono text-[10px] text-[#D4A96A] tracking-[0.12em]">
+                        {cap.num}
+                      </span>
+                    </div>
+                    <h3 className="text-base font-semibold text-[#EEEEF0] tracking-[-0.01em] leading-snug">
+                      {cap.system}
+                    </h3>
+                  </div>
 
-                {/* Description */}
-                <p className="text-sm text-[#88888F] leading-[1.65]">
-                  {cap.description}
-                </p>
+                  {/* Middle — description */}
+                  <div className="lg:col-span-5">
+                    <p className="text-sm text-[#555560] leading-[1.7]">
+                      {cap.description}
+                    </p>
+                  </div>
 
-                {/* Specs */}
-                <div className="mt-auto pt-4 border-t border-[#1E1E26]">
-                  <ul className="grid grid-cols-2 gap-x-4 gap-y-2">
-                    {cap.specs.map((spec) => (
-                      <li
-                        key={spec}
-                        className="font-mono text-[10px] text-[#404048] tracking-[0.04em]"
-                      >
-                        {spec}
-                      </li>
-                    ))}
-                  </ul>
+                  {/* Right — specs */}
+                  <div className="lg:col-span-3">
+                    <ul className="flex flex-col gap-2">
+                      {cap.specs.map((spec) => (
+                        <li
+                          key={spec}
+                          className="flex items-center gap-2 font-mono text-[10px] text-[#404048] tracking-[0.06em]"
+                        >
+                          <span className="h-px w-3 flex-shrink-0 bg-[#2A2A33]" />
+                          {spec}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
             </FadeIn>

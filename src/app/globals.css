@@ -3,34 +3,23 @@
 /* ─── Reygent Design Tokens ─────────────────────────────────────────────── */
 
 :root {
-  /* Surfaces */
-  --color-base:        #09090C;   /* deepest — page base */
-  --color-surface:     #0E0E12;   /* elevated panels, diagram bg */
-  --color-surface-2:   #111116;   /* section alternation */
-  --color-surface-3:   #17171D;   /* card interior hover */
+  --color-base:        #09090C;
+  --color-surface:     #0E0E12;
+  --color-surface-2:   #111116;
+  --color-surface-3:   #17171D;
 
-  /* Borders */
-  --color-border:      #1E1E26;   /* primary structural border */
-  --color-border-2:    #2A2A33;   /* stronger dividers */
-  --color-border-3:    #35353C;   /* interactive borders */
+  --color-border:      #1E1E26;
+  --color-border-2:    #2A2A33;
+  --color-border-3:    #35353C;
 
-  /* Text */
-  --color-text-primary:   #EEEEF0;   /* off-white — AAA on base */
-  --color-text-secondary: #88888F;   /* muted */
-  --color-text-tertiary:  #555560;   /* very muted */
-  --color-text-ghost:     #404048;   /* near-invisible, mono labels */
+  --color-text-primary:   #EEEEF0;
+  --color-text-secondary: #88888F;
+  --color-text-tertiary:  #555560;
+  --color-text-ghost:     #404048;
 
-  /* Ray — Reygent brand signature */
-  --color-ray:         #D4A96A;   /* warm amber, low saturation */
-  /* Appears: hero bg, systems connector, FinalCTA bg. Three times total. */
+  --color-ray:         #D4A96A;
 
-  /* Interactive — high-contrast on dark */
   --color-accent:      #EEEEF0;
-
-  /* Shadows */
-  --shadow-panel:  0 1px 3px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03);
-  --shadow-raised: 0 8px 32px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04);
-  --shadow-diagram: 0 0 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
 }
 
 @theme inline {
@@ -38,6 +27,55 @@
   --color-foreground: var(--color-text-primary);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
+
+/* ─── Keyframes ──────────────────────────────────────────────────────────── */
+
+@keyframes nodeIn {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes lineGrow {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50%       { opacity: 1;    transform: scale(1.45); }
+}
+
+@keyframes clipReveal {
+  from { transform: translateY(110%); }
+  to   { transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes shimmerRay {
+  0%, 100% { opacity: 0.07; }
+  50%       { opacity: 0.13; }
+}
+
+/* ─── Reduced motion overrides ──────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* ─── Base ───────────────────────────────────────────────────────────────── */
@@ -78,21 +116,9 @@ body {
   color: var(--color-text-primary);
 }
 
-/* ─── Scrollbar (Webkit) ────────────────────────────────────────────────── */
+/* ─── Scrollbar ─────────────────────────────────────────────────────────── */
 
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--color-base);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-border-2);
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-border-3);
-}
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--color-base); }
+::-webkit-scrollbar-thumb { background: #1E1E26; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #2A2A33; }
